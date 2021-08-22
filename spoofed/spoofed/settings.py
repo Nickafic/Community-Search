@@ -55,7 +55,7 @@ ROOT_URLCONF = 'spoofed.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [r'C:\Users\iinic\Desktop\Programs\Spoofed\spoofed\home\templates\home'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
