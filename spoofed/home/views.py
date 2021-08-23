@@ -4,3 +4,9 @@ from django.http import HttpResponse
 
 def index(request):
     return render(request, 'spoofed.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def create(request):
+    return render(request, 'create.html')
