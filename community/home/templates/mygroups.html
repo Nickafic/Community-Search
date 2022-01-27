@@ -1,0 +1,16 @@
+{% extends "spoofed.html" %}
+    {%block body%}
+        <h1 class="font">My Groups</h1>
+        {% for form in formset %}
+        <ul>
+            <form method="POST" action='/mygroups'>
+                {{formset.management_form}}
+                {% csrf_token %}
+                {{form.remove}}
+                <a href="{{form.remove.value}}">{{form.remove.value}}</a>
+                <button type="submit">remove</button>
+            </form>
+        </ul>
+        {%endfor%}
+        <a href="{%url 'index'%}">return to search</a>
+    {%endblock%}

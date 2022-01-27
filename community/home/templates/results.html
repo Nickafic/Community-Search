@@ -1,0 +1,24 @@
+{% extends "spoofed.html" %}
+    {%load static%}
+    {% block body %}
+        <h1 id="font">Results</h1>
+        <br>
+        <form method= 'post' id="main" class="center" action="/results">
+            {% csrf_token %} 
+            {{form.name}}
+            <button type="submit" class="search-button" id="result-search"><img src="{% static 'magnify.png' %}"></button>
+        </form>
+        Reddit: {{ redinfo }}
+        <form method = 'post' action="/add">
+            {% csrf_token %}
+            {% if redlink != False %}
+                <a href={{ redlink }} id="link">view group!</a>
+                {{form2}}
+                <button type="submit">add</button>
+            {% endif%}
+        </form>
+        <br>
+        <br>
+        Quora: {{ quorainfo }}
+        <br>
+    {%endblock%}
