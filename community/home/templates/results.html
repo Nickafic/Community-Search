@@ -9,23 +9,27 @@
                 <button type="submit" class="search-button" id="result-search"><img src="{% static 'magnify.png' %}"></button>
             </form>
         </div>
-
+        {% for links in {{linklist}} %}
+            <div class="results">
+                Reddit: {{ links }}
+                <form method = 'post' action="/add">
+                    {% csrf_token %}
+                    {% if links != False %}
+                        <a href={{ redlink }} id="link">view group!</a>
+                        {{form2}}
+                        <button type="submit">add</button>
+                    {% endif%}
+                </form>
+            </div>
+        {% endfor %}
         <div class="results">
-            Reddit: {{ redinfo }}
-            <form method = 'post' action="/add">
-                {% csrf_token %}
-                {% if redlink != False %}
-                    <a href={{ redlink }} id="link">view group!</a>
-                    {{form2}}
-                    <button type="submit">add</button>
-                {% endif%}
-            </form>
+                Digg: {{ digginfo }}
+                <br>
+                <a href={{digglink}}>view group!</a>
         </div>
         <div class="results">
-            Digg: {{ digginfo }}
-            <a href={{digglink}}>view group!</a>
-        </div>
-        <div class="results">
-            hive: <a href="{{hivelink}}">view group!</a>
+             hive: 
+            <br>
+            <a href="{{hivelink}}">view group!</a>
         </div>
     {%endblock%}
