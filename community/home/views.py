@@ -30,9 +30,10 @@ def add(request):
         return redirect(request.META['HTTP_REFERER'])
 
 def results(request):
+    hivelink = ''
+    digglink = ''
+    digginfo = ''
     redinfo = ''
-    quorainfo = ''
-    facebook = ''
     redlink = False
     form = CommForm()
     form2 = AddForm()
@@ -40,26 +41,42 @@ def results(request):
         form = CommForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            facebook = f'https://www.facebook.com/groups/{name}'
             try:
-                sub = reddit.subreddit(name)
-                redinfo = sub.public_description
-                redlink = f'https://reddit.com/r/{name}'
+            #digg scrape
+                digginfo = digg(name)
             except:
-                redinfo = f'{name} is not a valid community'
-            # Obaining Quora info
-            URL = f'https://digg.com/{name}'
+                digginfo = f'{name} doesn\'t exist'
+
+            #reddit scrape
+            redinfo = redd(name)
             form2.initial['add'] = redlink
-            page = requests.get(URL)
-            soup = BeautifulSoup(page.content, 'lxml')
-            quorainfo = soup.find("div").text
+
+            hivelink = f'https://hive.blog/trending/{name}'
+            redlink = f'https://reddit.com/r/{name}'
+            digglink = f'https://digg.com/{name}'
     return render(request, 'results.html', {
+        'hivelink': hivelink,
+        'digglink': digglink,
         'redlink': redlink,
-        'redinfo': redinfo,
         'form2':form2,
         'form': form,
-        'quorainfo': quorainfo
+        'redinfo': redinfo,
+        'digginfo': digginfo,
     })
+
+def redd(name):
+    try:
+        sub = reddit.subreddit(name)
+        redinfo = sub.public_description
+    except:
+        redinfo = f'{name} is not a valid community'
+    return redinfo
+
+def digg(name):
+    soup = BeautifulSoup(requests.get(f'https://digg.com/{name}').content, 'html5lib')
+    for i in soup.find_all("p", {"class": "leading-5 mb-4 text-digg-gray namespace-sidebar__description"}): 
+        digginfo = i.text.strip()
+    return digginfo
 
 def index(request):
     form = CommForm()
