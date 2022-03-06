@@ -30,12 +30,11 @@ def add(request):
         return redirect(request.META['HTTP_REFERER'])
 
 def results(request):
-    redlink = ''
-    digglink = ''
     hivelink = ''
-    linklist = [redlink,digglink,hivelink]
+    digglink = ''
     digginfo = ''
     redinfo = ''
+    redlink = False
     form = CommForm()
     form2 = AddForm()
     if request.method == 'POST':
@@ -50,13 +49,15 @@ def results(request):
 
             #reddit scrape
             redinfo = redd(name)
-            linklist[0] = f'https://reddit.com/r/{name}'
-            form2.initial['add'] = linklist[0]
+            form2.initial['add'] = redlink
 
-            linklist[2] = f'https://hive.blog/trending/{name}'
-            linklist[1] = f'https://digg.com/{name}'
+            hivelink = f'https://hive.blog/trending/{name}'
+            redlink = f'https://reddit.com/r/{name}'
+            digglink = f'https://digg.com/{name}'
     return render(request, 'results.html', {
-        'linklist':linklist,
+        'hivelink': hivelink,
+        'digglink': digglink,
+        'redlink': redlink,
         'form2':form2,
         'form': form,
         'redinfo': redinfo,

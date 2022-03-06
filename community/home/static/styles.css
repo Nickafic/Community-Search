@@ -29,17 +29,13 @@ h1{
     position: relative;
     top: 100px;
     background: transparent;
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 .search-button img{
     width: 20px;
     height: 20px;
     object-fit: cover;
-}
-.results{
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 .search{  
     position: relative;
@@ -53,11 +49,4 @@ h1{
     background-color: white;
     font-size: 16px;
     top: 100px;
-}
-#commsearch{
-    position: relative;
-    bottom: 200px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    
 }
